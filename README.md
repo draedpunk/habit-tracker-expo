@@ -368,3 +368,47 @@ Os arquivos com a estrutura e comentários `// TODO` estão prontos para desenvo
 > ⚠️ **Limitação declarada das rotas (Restrições):**
 > A foto escolhida ou capturada em `/registrar-foto` (ou na `/galeria`) **não volta para a lista** — levar dados e estados entre diferentes telas é o conteúdo da Aula 7. Reconhecer e documentar essa fronteira faz parte da entrega da aula.
 
+
+### Entrega da Parte 2 — o que foi feito
+
+**Atividade 1 — o app com mais de uma tela**
+
+- Projeto migrado para o Expo Router: `"main": "expo-router/entry"`, `"scheme": "habittracker"`, `src/app/index.tsx` reexportando `../screens/tela-habitos` (a tela não foi movida) e `App.tsx`/`index.ts` apagados.
+- Rotas estáticas com título no `_layout.tsx`: `/` (Meus hábitos), `/registrar-foto` (Foto do hábito), `/sobre` (Sobre o app).
+- Navegação pelos dois caminhos, na tela inicial:
+  - `router.push('/registrar-foto')` no botão **Foto do hábito** — a navegação é consequência de uma ação;
+  - `<Link href="/galeria">` e `<Link href="/sobre">` — destinos fixos, declarados no JSX.
+- `/registrar-foto`: galeria **ou** câmera, prévia em `expo-image` (`contentFit="cover"`, `transition={300}`), cancelamento sem mensagem, câmera **negada** e **bloqueada** com mensagens distintas (via `canAskAgain`), galeria sempre disponível e **Concluir** desabilitado até haver foto. O contrato de três tempos está no topo do arquivo.
+- Config plugin do `expo-image-picker` no `app.json` com textos de permissão honestos e `microphonePermission: false`.
+
+**Atividade 2 — a galeria do hábito**
+
+- `/galeria`: até 6 fotos (`allowsMultipleSelection`, `selectionLimit: 6`) numa `FlatList` de 3 colunas, com mensagem de lista vazia.
+- A miniatura mora em `src/components/miniatura-foto.tsx` (com `maxWidth: '33%'` para a última foto não esticar e `recyclingKey`); nenhum componente auxiliar dentro de `src/app/`.
+- O comentário no topo de `galeria.tsx` explica por que seleção múltipla e recorte (`allowsEditing`) não convivem.
+
+**Troca do Stack por Tabs**
+
+O `Stack` do `_layout.tsx` foi trocado por `Tabs` (barra de abas inferior do Expo Router), com ícones em emoji — sem instalar nenhuma biblioteca de ícones nova:
+
+| Aba | Rota | Título do cabeçalho |
+|---|---|---|
+| Hábitos | `/` | Meus hábitos |
+| Foto | `/registrar-foto` | Foto do hábito |
+| Galeria | `/galeria` | Galeria do hábito |
+| Sobre | `/sobre` | Sobre o app |
+
+Por que Tabs: as quatro telas são destinos do mesmo nível, e não uma "tela filha" da outra — a aba deixa cada uma a um toque.
+
+Cuidados da troca:
+- `backBehavior="history"` no `Tabs`: sem ele, o "voltar" das abas vai sempre para a primeira aba. Com ele, `router.back()` (no **Concluir** e no **Voltar**) e o botão voltar do Android retornam à aba visitada antes, como acontecia no Stack.
+- Abrindo uma aba direto (deep link, ex.: `habittracker://sobre`) não há histórico; por isso **Concluir** e **Voltar** checam `router.canGoBack()` e, se não houver para onde voltar, vão para `/`.
+- `headerBackTitle` era opção do Stack (texto ao lado da seta, no iOS); nas abas não há seta de voltar no cabeçalho, então a opção saiu.
+- As abas ficam **montadas** depois da primeira visita: a foto escolhida em `/registrar-foto` continua lá ao voltar para a aba. Isso não muda a limitação abaixo — o estado é da aba, não volta para a lista.
+
+**Como rodar**
+
+```bash
+npm install
+npx expo start --clear
+```

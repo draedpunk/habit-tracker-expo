@@ -13,12 +13,16 @@ type MiniaturaFotoProps = {
 };
 
 export function MiniaturaFoto({ item }: MiniaturaFotoProps) {
-  // TODO A2.1: renderize a Image do expo-image com:
-  //           - source={{ uri: item.uri }}
-  //           - contentFit="cover"
-  //           - recyclingKey={item.uri} (boa prática da Aula 5)
-  //           - estilo estilos.miniatura (com maxWidth: '33%' para não esticar)
-  return null;
+  // recyclingKey (Aula 5): a FlatList recicla a célula, e sem a chave a foto antiga
+  // aparece por um instante antes da nova carregar.
+  return (
+    <Image
+      source={{ uri: item.uri }}
+      style={estilos.miniatura}
+      contentFit="cover"
+      recyclingKey={item.uri}
+    />
+  );
 }
 
 const estilos = StyleSheet.create({

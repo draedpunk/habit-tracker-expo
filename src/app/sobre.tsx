@@ -12,16 +12,26 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 export default function TelaSobre() {
   const router = useRouter();
 
+  function voltar() {
+    // Aberta direto pela aba (sem histórico), "Voltar" leva para a lista.
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.navigate('/');
+    }
+  }
+
   return (
     <View style={estilos.tela}>
       <Text style={estilos.titulo}>Rastreador de Micro-hábitos</Text>
       <Text style={estilos.subtitulo}>Versão: Aula 6 (Navegação & Fotos)</Text>
 
-      {/* TODO A1.9: exiba aqui o texto explicando a limitação atual do app:
-                    "A foto registrada não volta para a lista de hábitos — levar
-                    dados entre telas será implementado na próxima aula." */}
+      <Text style={estilos.limitacao}>
+        A foto registrada não volta para a lista de hábitos — levar dados entre telas será
+        implementado na próxima aula.
+      </Text>
 
-      <Pressable onPress={() => router.back()} style={estilos.botao}>
+      <Pressable onPress={voltar} style={estilos.botao}>
         <Text style={estilos.textoBotao}>Voltar</Text>
       </Pressable>
     </View>

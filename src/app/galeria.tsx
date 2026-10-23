@@ -1,9 +1,13 @@
 // Atividade 2 — A Galeria do Hábito
 // Onde: src/app/galeria.tsx
 //
-// TODO A2.2 (OBRIGATÓRIO): escreva aqui num comentário por que a seleção múltipla
-//                          e o recorte (allowsEditing) NÃO convivem:
-// _______________________________________________________________________________
+// Por que a seleção múltipla e o recorte (allowsEditing) NÃO convivem:
+// o recorte é uma tela de edição do sistema que trabalha sobre UMA imagem por vez —
+// o usuário ajusta o enquadramento daquela foto e confirma. Com várias fotos
+// escolhidas de uma vez, não existe um fluxo nativo para recortar cada uma em
+// sequência, então o sistema simplesmente ignora o allowsEditing quando
+// allowsMultipleSelection está ligado (no iOS e no Android). Por isso aqui não
+// pedimos recorte: a grade usa contentFit="cover" para enquadrar as miniaturas.
 
 import { useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
@@ -12,22 +16,31 @@ import * as ImagePicker from 'expo-image-picker';
 // NUNCA declarado dentro de src/app/ para não gerar rotas fantasmas.
 import { MiniaturaFoto } from '../components/miniatura-foto';
 
-// TODO A2.3: declare aqui a função/componente de lista vazia
+// Fora do componente: a FlatList recebe sempre a mesma referência a cada render.
+function renderFoto({ item }: { item: ImagePicker.ImagePickerAsset }) {
+  return <MiniaturaFoto item={item} />;
+}
+
 function ListaVazia() {
   return <Text style={estilos.vazio}>Nenhuma foto escolhida ainda.</Text>;
 }
 
 export default function TelaGaleria() {
-  // TODO A2.4: estado com a lista de assets, começando vazia e tipada com ImagePicker.ImagePickerAsset[]
   const [fotos, setFotos] = useState<ImagePicker.ImagePickerAsset[]>([]);
 
   async function escolherFotos() {
-    // TODO A2.5: abra a galeria configurada para:
-    //           - mediaTypes: ['images']
-    //           - allowsMultipleSelection: true
-    //           - selectionLimit: 6
-    //           - quality: 0.7
-    //           Trate o cancelamento e guarde os assets selecionados em `fotos`.
+    // A galeria do sistema não precisa de permissão prévia: o app só recebe
+    // as fotos que o usuário escolheu.
+    const resultado = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsMultipleSelection: true,
+      selectionLimit: 6,
+      quality: 0.7,
+    });
+
+    // Cancelar não é erro: mantém as fotos que já estavam na grade.
+    if (resultado.canceled) return;
+    setFotos(resultado.assets);
   }
 
   return (
@@ -36,14 +49,15 @@ export default function TelaGaleria() {
         <Text style={estilos.textoBotao}>Escolher até 6 fotos</Text>
       </Pressable>
 
-      {/* TODO A2.6: FlatList configurada com:
-                    - data={fotos}
-                    - keyExtractor por foto.uri
-                    - renderItem usando <MiniaturaFoto item={item} />
-                    - numColumns={3}
-                    - columnWrapperStyle={estilos.linha}
-                    - contentContainerStyle={estilos.grade}
-                    - ListEmptyComponent={ListaVazia} */}
+      <FlatList
+        data={fotos}
+        keyExtractor={(foto) => foto.uri}
+        renderItem={renderFoto}
+        numColumns={3}
+        columnWrapperStyle={estilos.linha}
+        contentContainerStyle={estilos.grade}
+        ListEmptyComponent={ListaVazia}
+      />
     </View>
   );
 }
