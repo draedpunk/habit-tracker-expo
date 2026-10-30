@@ -7,7 +7,7 @@ import { rotuloDoStatus } from '../utils/status-habito';
 
 export type ItemHabitoProps = {
   habito: Habito;
-  onAlternar: (id: string) => void;
+  onAbrir: (id: string) => void;
   onRemover: (id: string) => void;
 };
 
@@ -25,10 +25,10 @@ function descrever(habito: Habito): string {
   return partes.join(', ');
 }
 
-export function ItemHabito({ habito, onAlternar, onRemover }: ItemHabitoProps) {
+export function ItemHabito({ habito, onAbrir, onRemover }: ItemHabitoProps) {
   return (
     <Pressable
-      onPress={() => onAlternar(habito.id)}
+      onPress={() => onAbrir(habito.id)}
       onLongPress={() => onRemover(habito.id)}
       accessibilityRole="button"
       accessibilityLabel={descrever(habito)}
@@ -58,7 +58,7 @@ export function ItemHabito({ habito, onAlternar, onRemover }: ItemHabitoProps) {
         titulo={habito.titulo}
         categoria={habito.categoria}
         status={habito.status}
-        onPress={() => onAlternar(habito.id)}
+        onPress={() => onAbrir(habito.id)}
         destacado={habito.destacado}
         fotoUri={habito.fotoUri}
         local={habito.local}

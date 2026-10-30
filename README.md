@@ -385,17 +385,21 @@ Resoluções das Partes 1 e 2 da Aula 7 (**Navegação avançada com Expo Router
 | `exercicios/settings.tsx` | Tela Configurações do Drawer | Exercício 3 |
 | `exercicios/notificacoes.tsx` | Fluxo completo de notificação local (`setNotificationHandler`, `requestPermissionsAsync`, listeners e agendamento em 5s) | Exercício 4 |
 
-### Parte 2 — Atividade Aplicada (`src/app/` e `src/screens/tela-habitos.tsx`)
+### Parte 2 — Atividade Aplicada (`src/app/`, `src/services/notificacoes.ts` e `src/context/habitos-context.tsx`)
 
 | Arquivo | O que foi implementado |
 |---|---|
-| `src/app/_layout.tsx` | `<Drawer>` com os 3 itens principais (`(tabs)` Home, `about` Sobre, `settings` Configurações) usando `MaterialIcons` |
-| `src/app/(tabs)/_layout.tsx` | `<Tabs>` com 2 abas (`index` Home e `stats` Stats) usando `Feather` e `tabBarActiveTintColor: '#007AFF'` |
+| `src/app/_layout.tsx` | `<Drawer>` com os 3 itens principais (`(tabs)` Home, `about` Sobre, `settings` Configurações) usando `MaterialIcons`; `habit/[id]`, `registrar-foto` e `galeria` ficam fora do menu |
+| `src/app/(tabs)/_layout.tsx` | `<Tabs>` com 2 abas (`index` Home e `stats` Estatísticas) usando `Feather`, sem header próprio |
 | `src/app/(tabs)/index.tsx` | Rota da aba Home apontando para `TelaHabitos` |
-| `src/app/(tabs)/stats.tsx` | Aba de estatísticas dos hábitos da lista |
-| `src/app/habit/[id].tsx` | Rota dinâmica de detalhe do hábito com `useLocalSearchParams<{ id: string }>()`, exibição de `Hábito ID: {id}` e retorno à lista |
+| `src/app/(tabs)/stats.tsx` | Aba de estatísticas (placeholder, como pede o enunciado) |
+| `src/app/habit/[id].tsx` | Rota dinâmica de detalhe com `useLocalSearchParams<{ id: string }>()`, alternância de status, botão de agendar lembrete e retorno à lista |
 | `src/app/about.tsx` | Tela Sobre acessível pelo menu lateral (Drawer) |
 | `src/app/settings.tsx` | Tela de Configurações acessível pelo menu lateral (Drawer) |
-| `src/screens/tela-habitos.tsx` | Integração de notificações locais (`setNotificationHandler`, permissão, listeners imprimindo `"Notificação recebida"` e `"Notificação tocada"`, agendamento para 5s e navegação automática ao tocar na notificação ou em um hábito da lista) |
+| `src/services/notificacoes.ts` | `setNotificationHandler`, permissão, canal Android, agendamento para 5s e listeners imprimindo `"Notificação recebida"` e `"Notificação tocada"`; o toque abre o detalhe, inclusive com o app fechado |
+| `src/context/habitos-context.tsx` | Lista de hábitos compartilhada entre a lista e o detalhe |
+| `src/screens/tela-habitos.tsx` | Tocar em um hábito abre o detalhe (alternar o status passou para a tela de detalhe) |
+
+Os `id` do mock passaram de `h5` para `5`, para a rota ficar `/habit/5` como no checklist.
 
 

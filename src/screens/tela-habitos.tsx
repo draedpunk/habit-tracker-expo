@@ -5,7 +5,7 @@ import { Pressable, SectionList, StyleSheet, Text, TextInput, View } from 'react
 import { BotaoAcao } from '../components/botao-acao';
 import { ItemHabito } from '../components/item-habito';
 import { ListaVazia } from '../components/lista-vazia';
-import { HABITOS } from '../data/habitos';
+import { useHabitos } from '../context/habitos-context';
 import { agrupar, filtrarPorTitulo } from '../lib/agrupar';
 import { cores, espaco, tipografia } from '../theme';
 import type { Habito } from '../types/habito';
@@ -24,55 +24,34 @@ function Cabecalho({ busca, onBuscaChange }: { busca: string; onBuscaChange: (bu
 
 export function TelaHabitos() {
   const router = useRouter();
-  const [habitos, setHabitos] = useState<Habito[]>(HABITOS);
+  const { habitos, remover, adicionar, recarregar: recarregarHabitos } = useHabitos();
   const [busca, setBusca] = useState('');
   const [atualizando, setAtualizando] = useState(false);
   const [registrando, setRegistrando] = useState(false);
 
-  function alternar(id: string) {
-    setHabitos((prev) =>
-      prev.map((h) =>
-        h.id === id
-          ? { ...h, status: h.status === 'pendente' ? 'concluido' : 'pendente' }
-          : h
-      )
-    );
-  }
-
-  function remover(id: string) {
-    setHabitos((prev) => prev.filter((h) => h.id !== id));
-  }
-
   function recarregar() {
     setAtualizando(true);
-
-    // Recarregar volta ao mock, mas NÃO joga fora o que o usuário registrou: um hábito
-    // que custou duas permissões não pode sumir no primeiro puxão de tela. Os
-    // registrados são os que não estão no mock — os do topo continuam no topo.
-    setHabitos((prev) => {
-      const idsDoMock = new Set(HABITOS.map((h) => h.id));
-      const registrados = prev.filter((h) => !idsDoMock.has(h.id));
-      return [...registrados, ...HABITOS];
-    });
-
+    recarregarHabitos();
     setBusca('');
     setAtualizando(false);
   }
 
-  function adicionar(novo: Habito) {
-    // Array NOVO, como na Aula 4 — nunca `push` no anterior. E ele entra no TOPO: no fim
-    // da lista o usuário teria que rolar para ver o resultado do que acabou de fazer.
-    setHabitos((prev) => [novo, ...prev]);
+  function salvarNovo(novo: Habito) {
+    adicionar(novo);
     // A busca antiga pode esconder justamente o hábito recém-criado.
     setBusca('');
     setRegistrando(false);
+  }
+
+  function abrirDetalhe(id: string) {
+    router.push({ pathname: '/habit/[id]', params: { id } });
   }
 
   const secoes = agrupar(filtrarPorTitulo(habitos, busca));
 
   if (registrando) {
     return (
-      <TelaRegistrarHabito onSalvar={adicionar} onCancelar={() => setRegistrando(false)} />
+      <TelaRegistrarHabito onSalvar={salvarNovo} onCancelar={() => setRegistrando(false)} />
     );
   }
 
@@ -83,7 +62,7 @@ export function TelaHabitos() {
         renderItem={({ item }) => (
           <ItemHabito
             habito={item}
-            onAlternar={alternar}
+            onAbrir={abrirDetalhe}
             onRemover={remover}
           />
         )}
@@ -113,10 +92,6 @@ export function TelaHabitos() {
           <Pressable style={({ pressed }) => [styles.botaoSecundario, pressed && styles.botaoPressionado]}>
             <Text style={styles.textoBotaoSecundario}>Galeria do hábito</Text>
           </Pressable>
-        </Link>
-
-        <Link href="/sobre" style={styles.linkSobre}>
-          Sobre o app
         </Link>
       </View>
     </View>
@@ -171,12 +146,5 @@ const styles = StyleSheet.create({
   },
   botaoPressionado: {
     opacity: 0.7,
-  },
-  linkSobre: {
-    fontSize: 16,
-    color: '#f26522',
-    textDecorationLine: 'underline',
-    textAlign: 'center',
-    paddingVertical: 4,
   },
 });

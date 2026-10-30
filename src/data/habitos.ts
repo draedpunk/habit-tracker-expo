@@ -2,7 +2,7 @@ import type { Habito } from '../types/habito';
 
 export const HABITOS: Habito[] = [
   {
-    id: 'h1',
+    id: '1',
     titulo: 'Beber 2L de água',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -11,7 +11,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-01T09:00:00.000Z',
   },
   {
-    id: 'h2',
+    id: '2',
     titulo: 'Alongar 5 min',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -20,7 +20,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-02T09:00:00.000Z',
   },
   {
-    id: 'h3',
+    id: '3',
     titulo: 'Ler 10 páginas',
     categoria: 'mentalidade',
     frequencia: 'diaria',
@@ -29,7 +29,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-03T09:00:00.000Z',
   },
   {
-    id: 'h4',
+    id: '4',
     titulo: 'Dormir antes das 23h',
     categoria: 'sono',
     frequencia: 'diaria',
@@ -38,7 +38,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-04T09:00:00.000Z',
   },
   {
-    id: 'h5',
+    id: '5',
     titulo: 'Meditar por 10 minutos',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -47,7 +47,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-05T09:00:00.000Z',
   },
   {
-    id: 'h6',
+    id: '6',
     titulo: 'Caminhar 30 minutos',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -56,7 +56,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-06T09:00:00.000Z',
   },
   {
-    id: 'h7',
+    id: '7',
     titulo: 'Estudar por 1 hora',
     categoria: 'produtividade',
     frequencia: 'diaria',
@@ -65,7 +65,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-07T09:00:00.000Z',
   },
   {
-    id: 'h8',
+    id: '8',
     titulo: 'Fazer 20 flexões',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -74,7 +74,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-08T09:00:00.000Z',
   },
   {
-    id: 'h9',
+    id: '9',
     titulo: 'Ler por 30 minutos',
     categoria: 'produtividade',
     frequencia: 'diaria',
@@ -83,7 +83,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-09T09:00:00.000Z',
   },
   {
-    id: 'h10',
+    id: '10',
     titulo: 'Caminhar 30 minutos',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -92,7 +92,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-10T09:00:00.000Z',
   },
   {
-    id: 'h11',
+    id: '11',
     titulo: 'Caminhar 30 minutos',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -101,7 +101,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-11T09:00:00.000Z',
   },
   {
-    id: 'h12',
+    id: '12',
     titulo: 'Caminhar 30 minutos',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -110,7 +110,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-12T09:00:00.000Z',
   },
   {
-    id: 'h13',
+    id: '13',
     titulo: 'Caminhar 30 minutos',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -119,7 +119,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-13T09:00:00.000Z',
   },
   {
-    id: 'h14',
+    id: '14',
     titulo: 'Caminhar 30 minutos',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -128,7 +128,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-14T09:00:00.000Z',
   },
   {
-    id: 'h15',
+    id: '15',
     titulo: 'Caminhar 30 minutos',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -137,7 +137,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-15T09:00:00.000Z',
   },
   {
-    id: 'h16',
+    id: '16',
     titulo: 'Caminhar 30 minutos',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -146,7 +146,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-16T09:00:00.000Z',
   },
   {
-    id: 'h17',
+    id: '17',
     titulo: 'Caminhar 30 minutos',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -155,7 +155,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-17T09:00:00.000Z',
   },
   {
-    id: 'h18',
+    id: '18',
     titulo: 'Caminhar 30 minutos',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -164,7 +164,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-18T09:00:00.000Z',
   },
   {
-    id: 'h19',
+    id: '19',
     titulo: 'Caminhar 30 minutos',
     categoria: 'saude',
     frequencia: 'diaria',
@@ -173,7 +173,7 @@ export const HABITOS: Habito[] = [
     criadoEm: '2026-09-19T09:00:00.000Z',
   },
   {
-    id: 'h20',
+    id: '20',
     titulo: 'Caminhar 30 minutos',
     categoria: 'saude',
     frequencia: 'diaria',
